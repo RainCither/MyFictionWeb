@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title th:text="${fiction.getBName()}"></title>
+</head>
+
+<body>
+
+    <link rel="stylesheet" th:href="@{/static/css/style.css}" />
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+
+    <div class="header">
+        <h1 class="logo"><a href="/">笔趣阁</a></h1>
+        <form action="" class="search-form" id="form">
+            <input class="input-text input-key" id="keyWord" name="keyWord" type="text" maxlength="30"
+                placeholder="可搜书名和作者，请您少字也别输错字。" />
+            <input type="button" class="btn-tosearch" value="搜索" title="搜索" onclick="check()" />
+        </form>
+    </div>
+
+
+    <ul class="nav">
+        <li><a href="/">首页</a></li>
+        <li><a href="">玄幻奇幻</a></li>
+        <li><a href="">武侠仙侠</a></li>
+        <li><a href="">都市言情</a></li>
+        <li><a href="">历史军事</a></li>
+        <li><a href="">科幻灵异</a></li>
+        <li><a href="">网游竞技</a></li>
+        <li><a href="">女生频道</a></li>
+        <li><a href="">排行榜单</a></li>
+        <li><a href="">收藏榜单</a></li>
+        <li><a href="">完本小说</a></li>
+        <li><a href="">永久书架</a></li>
+        <li><a href="">阅读记录</a></li>
+    </ul>
+    <ul class="m-nav">
+        <li><a href="">排行</a></li>
+        <li><a href="">收藏</a></li>
+        <li><a href="">完本</a></li>
+        <li><a href="">阅读记录</a></li>
+        <li><a href="">书架</a></li>
+    </ul>
+
+    <div class="container">
+        <div class="row row-detail">
+            <div class="layout layout-col1">
+
+                <!-- 导航条 -->
+                <h2 class="layout-tit"><a href="/">笔趣阁</a> > <span th:text="${fiction.getBName()}"></span></h2>
+
+                <div class="detail-box">
+
+                    <!-- 封面 -->
+                    <div class="imgbox">
+                        <img th:alt="${fiction.getBName()}" th:src="@{${fiction.getCover()}}" />
+                    </div>
+
+                    <div class="info">
+                        <div class="top">
+                            <!-- 书名 -->
+                            <h1 th:text="${fiction.getBName()}"></h1>
+                            <div class="fix">
+                                <!-- 作品信息 -->
+                                <p th:text="'作者：' + ${fiction.getAuthor()}"></p>
+                                <p class="xs-show" th:text="'分类：' + ${fiction.getCat()}"></p>
+                                <p th:text="'状态：' + ${fiction.getState()}"></p>
+                                <p th:text="'最后更新：' + ${chapterList.get(chapterList.size() - 1).getUpdateTime()}"></p>
+                                <p class="opt">
+                                    <a th:href="@{'/read/' + ${fiction.getBId()} + '/' + ${chapterList.get(0).getCId()}}" class="btn-read">开始阅读</a>
+                                    <span class="xs-hidden"> | </span>
+                                    <a rel="nofollow" href="javascript:0;" onclick="">加入书架</a>
+                                </p>
+                                <p class="xs-show"></p>
+                            </div>
+                        </div>
+                        <!-- 作品描述 -->
+                        <div class="desc xs-hidden" th:text="${fiction.getDesc()}"></div>
+                    </div>
+                    <div class="m-desc xs-show">
+                        <strong>简介:</strong>
+                        <br>
+                        <span th:text="${fiction.getDesc()}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-section">
+            <div class="layout layout-col1">
+
+                <h2 class="layout-tit" th:text="${fiction.getBName()} + '最新章节'"></h2>
+                <div class="section-box">
+                    <ul class="section-list fix" >
+                        <li th:each="index : ${#numbers.sequence(1,6)}" th:with="size = ${chapterList.size()}">
+                            <a th:href="@{'/read/' + ${fiction.getBId()} + '/' + ${chapterList.get(size - index).getCId()}}" th:text="${chapterList.get(size - index).getTitle()}" th:title="${chapterList.get(size - index).getUpdateTime()}"></a>
+                        </li>
+                    </ul>
+                </div>
+                <h2 class="layout-tit"  th:text="${fiction.getBName()} + '正文'"></h2>
+                <div class="section-box">
+                    <ul class="section-list fix">
+                        <li th:each="chapter : ${chapterList}">
+                            <a th:href="@{'/read/' + ${fiction.getBId()} + '/' + ${chapter.getCId()}}" th:text="${chapter.getTitle()}" th:title="${chapter.getUpdateTime()}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer" id="footer">
+        <div class="pc-footer">
+            <p>本站所有小说为转载作品，所有章节均由网友上传，转载至本站只是为了宣传本书让更多读者欣赏。</p>
+        </div>
+        <div class="m-footer">
+            <a href="/">首页</a>
+            <a href="" rel="nofollow">我的书架</a>
+            <a href="" rel="nofollow">阅读记录</a>
+            <a href="#">顶部↑</a>
+        </div>
+    </div>
+</body>
+
+</html>

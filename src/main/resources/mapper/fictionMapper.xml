@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cither.dao.FictionMapper">
+
+
+    <insert id="saveFiction" parameterType="com.cither.pojo.Fiction" useGeneratedKeys="true" keyProperty="bId"  keyColumn="b_id">
+        insert into
+        detail(b_name, author, `desc`, cat, cover, state, link)
+        value
+        (#{bName}, #{author}, #{desc}, #{cat}, #{cover}, #{state}, #{link})
+    </insert>
+
+</mapper>
