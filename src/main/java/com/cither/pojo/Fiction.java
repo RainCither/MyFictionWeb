@@ -1,14 +1,18 @@
 package com.cither.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * @author raincither
  * @date 2021/3/1 16:28
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
 public class Fiction {
 
     /**

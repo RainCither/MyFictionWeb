@@ -1,12 +1,16 @@
 package com.cither.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author raincither
  * @date 2021/3/1 22:43
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Chapter {
 
     int cId;

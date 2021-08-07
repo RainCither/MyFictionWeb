@@ -2,6 +2,7 @@ package com.cither;
 
 import com.cither.reptile.obtain.QdObtain;
 import com.cither.reptile.util.HttpClientUtil;
+import com.cither.util.RedisUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,6 +41,12 @@ class FictionApplicationTests {
 
         qd.getRank();
 
+    }
+    @Test
+    public void testRedis(){
+        RedisUtil redisUtil = new RedisUtil();
+
+        redisUtil.set("first", "jst");
     }
 
 }
