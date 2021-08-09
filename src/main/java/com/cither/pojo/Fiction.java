@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * @author raincither
  * @date 2021/3/1 16:28
@@ -13,7 +15,9 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class Fiction {
+public class Fiction implements Serializable {
+
+    private final static long serialVersionUID = 7L;
 
     /**
      * id

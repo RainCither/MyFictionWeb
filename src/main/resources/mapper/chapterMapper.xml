@@ -9,4 +9,13 @@
         value (#{bId}, #{title}, #{chapter}, #{updateTime}, #{chapterWhich}, #{chapterLink})
     </insert>
 
+    <insert id="saveListChapter" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="cId"  keyColumn="c_id">
+        insert into chapter(b_id, title, chapter, update_time, chapter_which, chapter_link) value
+            <foreach collection="list" separator="," item="item">
+                (#{item.bId}, #{item.title}, #{item.chapter}, #{item.updateTime}, #{item.chapterWhich}, #{item.chapterLink})
+            </foreach>
+    </insert>
+
+
+
 </mapper>

@@ -25,7 +25,14 @@ public interface ChapterMapper {
     int saveChapter(Chapter chapter);
 
     /**
-     * 根据 cId 保存 章节内容
+     * 根据章节目录id查询
+     * @param chapterList 书记列表
+     * @return 成功 ： 1 失败 ： 0
+     */
+    int saveListChapter(List<Chapter> chapterList);
+
+    /**
+     * 根据 cId 更新章节内容
      * @param cId cId
      * @param content 章节内容
      * @return 成功 ： 1 失败 ： 0
@@ -38,8 +45,16 @@ public interface ChapterMapper {
      * @param bId 书 id
      * @return Chapter
      */
-    @Select("select c_id, b_id, title, update_time, chapter_which, chapter_link from chapter where b_id = #{bId}")
+    @Select("select c_id, b_id, title, update_time, chapter，chapter_which, chapter_link from chapter where b_id = #{bId}")
     List<Chapter> findListChapterById(int bId);
+
+    /**
+     * 根据书籍id查找章节信息
+     * @param bId 书 id
+     * @return Chapter
+     */
+    @Select("select c_id, b_id, title, update_time, chapter_which, chapter_link from chapter where b_id = #{bId}")
+    List<Chapter> findListChapterInfoById(int bId);
 
     /**
      * 根据章节id查找
@@ -51,12 +66,11 @@ public interface ChapterMapper {
 
     /**
      * 根据章节目录id查询
-     * @param chapterWhich chapterWhich
+     * @param bId 书ID
+     * @param chapterWhich chapterWhich 章节索引
      * @return Chapter
      */
     @Select("select c_id from chapter where chapter_which = #{chapterWhich} && b_id = #{bId}")
     Integer findChapterByWhich(int bId, int chapterWhich);
-
-
 
 }

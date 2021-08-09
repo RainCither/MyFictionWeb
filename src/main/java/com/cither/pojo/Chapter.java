@@ -3,6 +3,9 @@ package com.cither.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * @author raincither
@@ -11,7 +14,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Chapter {
+@Accessors(chain = true)
+public class Chapter implements Serializable {
+
+    private final static long serialVersionUID = 7L;
 
     int cId;
 

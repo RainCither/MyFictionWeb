@@ -38,9 +38,18 @@ public interface FictionMapper {
 
     /**
      * 查询此书是否已入库
-     * @param link 链接
+     * @param bName 书名
+     * @param author 作者
+     * @return true is save
+     */
+    @Select("select count(*) from detail where author = #{author} and b_name = #{bName}")
+    boolean findFictionExist (String bName, String author);
+
+    /**
+     * 查询此书是否已入库
+     * @param link 书链接
      * @return true is save
      */
     @Select("select count(*) from detail where link = #{link}")
-    boolean findFictionExist (String link);
+    boolean findFictionExistByLink (String link);
 }

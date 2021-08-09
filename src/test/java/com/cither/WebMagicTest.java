@@ -1,8 +1,13 @@
 package com.cither;
 
+import com.cither.reptile.Pipeline.WebNovelPipeline;
+import com.cither.reptile.parsing.ReadWebNovel;
 import com.cither.reptile.parsing.WebNovelInfo;
 import org.junit.jupiter.api.Test;
+import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.scheduler.BloomFilterDuplicateRemover;
+import us.codecraft.webmagic.scheduler.QueueScheduler;
 import us.codecraft.webmagic.selector.Html;
 
 /**
@@ -13,17 +18,16 @@ public class WebMagicTest {
 
     @Test
     public void test1(){
-        Spider.create(new WebNovelInfo()).addUrl("https://book.qidian.com/info/1029006481").run();
+        Spider.create(new WebNovelInfo())
+                .addUrl("https://book.qidian.com/info/1016311897/")
+                .run();
     }
 
     @Test
     public void test2(){
-        Html html = new Html("<p>\n" + "\n" +
-                "　　这是一个以御兽为主流的异世界。<br>　　当时宇携带技能图鉴穿越到这里，并培育出一堆奇葩宠兽后，所有御兽师的三观都破碎了……<br>　　关键词：御兽、宠兽、宠物、召唤。\n" +
-                "\n" + "</p>");
+        Html html = new Html("<a href=\"//vipreader.qidian.com/chapter/1019664125/534766533\" target=\"_blank\" data-eid=\"qd_G55\" data-cid=\"//vipreader.qidian.com/chapter/1019664125/534766533\" title=\"首发时间：2020-05-01 00:05:24 章节字数：2535\">第九十八章 不为人知的隐秘</a>");
 
-        String s = html.xpath("//p").regex(">(.*)<").get();
-        String s1 = s.substring(1);
-        System.out.println("s = " + s1);
+        String s = html.xpath("//a/@title").get().substring(5,24);
+        System.out.println("s = " + s);
     }
 }
