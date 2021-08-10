@@ -3,6 +3,7 @@ package com.cither.service;
 import com.cither.dao.ChapterMapper;
 import com.cither.pojo.Chapter;
 import com.cither.pojo.Fiction;
+import com.cither.util.RedisUtil;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class ReadService {
 
     @Autowired
     ChapterMapper chapterMapper;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 根据书籍id查找
@@ -43,21 +46,33 @@ public class ReadService {
      * @return Chapter
      */
     public Chapter findChapterById(int cId) {
-        return chapterMapper.findChapterById(cId);
+        Chapter chapter = (Chapter) redisUtil.get("chapterContent:" + cId);
+        if(chapter == null){
+            chapter = chapterMapper.findChapterById(cId);
+            if(chapter == null){
+                return null;
+            }
+            redisUtil.set("chapterContent:" + cId, chapter);
+        }
+        return chapter;
     }
 
     /**
      * 根据章节目录id查询
      * @param bId 书ID
      * @param chapterWhich chapterWhich 章节索引
-     * @return Chapter
+     * @return ChapterId
      */
     public Integer findChapterByWhich(int bId, int chapterWhich) {
-        Integer chapterByWhich = chapterMapper.findChapterByWhich(bId, chapterWhich);
-        if (chapterByWhich == null) {
-            return 0;
+        Integer cId = (Integer) redisUtil.get(bId + ":which:" + chapterWhich);
+        if(cId == null){
+            cId = chapterMapper.findChapterByWhich(bId, chapterWhich);
+            if (cId == null) {
+                return -1;
+            }
+            redisUtil.set(bId + ":which:" + chapterWhich, cId);
         }
-        return chapterByWhich;
+        return cId;
     }
 
     /**

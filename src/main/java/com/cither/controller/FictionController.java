@@ -14,9 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,8 +40,8 @@ public class FictionController {
             return "error/404";
         }
         List<Chapter> chapterList = readService.findListChapterInfoById(bId);
-        if(chapterList == null){
-            chapterList = new ArrayList<>();
+        if(chapterList == null || chapterList.isEmpty()){
+            return "error/404";
         }
 
         model.addAttribute(fiction);
@@ -56,18 +53,27 @@ public class FictionController {
     @GetMapping("/read/{bId}/{cId}")
     public String getDetail(@PathVariable int bId, @PathVariable int cId, Model model) {
 
+        //获取书信息、章节信息
         Fiction fiction = infoServer.findFictionById(bId);
         Chapter chapter = readService.findChapterById(cId);
-        //取出并清空
-        if(chapter.getChapter() == null){
-            String content = webNovelUtil.readWebNovel(chapter.getChapterLink(), chapter.getCId());
-            chapter.setChapter(content);
+        if(fiction == null || chapter == null || fiction.getBId() != chapter.getBId()){
+            return "error/404";
         }
-        String[] contentList = chapter.getChapter().split("\n");
-        chapter.setChapter("");
+
+        //检查正文是否存在
+        String content = chapter.getChapter();
+        if(content == null){
+            //获取正文
+            content = webNovelUtil.readWebNovel(chapter.getChapterLink(), chapter.getCId());
+            if(content == null){
+                return "error/404";
+            }
+        }
+        String[] contentList = content.split("\n");
+
 
         //获取上下文章id
-        int proChapterId = readService.findChapterByWhich(bId,chapter.getChapterWhich() - 1);
+        int proChapterId =  readService.findChapterByWhich(bId,chapter.getChapterWhich() - 1);
         int nextChapterId = readService.findChapterByWhich(bId,chapter.getChapterWhich() + 1);
 
         model.addAttribute("fiction", fiction);

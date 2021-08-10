@@ -35,9 +35,13 @@ public class TestController {
 
     @RequestMapping("/magic")
     public Boolean magic(){
-
         webNovelUtil.getWebNovelRank();
-
         return true;
+    }
+
+    @RequestMapping("/pull/{uid}")
+    public String pull(@PathVariable int uid){
+        webNovelUtil.infoWebNovel("https://book.qidian.com/info/" + uid);
+        return "success";
     }
 }

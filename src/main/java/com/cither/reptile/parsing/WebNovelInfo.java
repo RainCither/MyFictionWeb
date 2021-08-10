@@ -60,6 +60,7 @@ public class WebNovelInfo implements PageProcessor {
             }
             all.removeAll(remove);
             page.addTargetRequests(all);
+            page.putField("rank", "Success");
         }
         //详情页
         else if(html.xpath("//a[@id='readBtn']").match()){
@@ -72,7 +73,7 @@ public class WebNovelInfo implements PageProcessor {
                 return;
             }
 
-            String bookImg = "http:" + information.xpath("//a[@id='bookImg']/@href").get();
+            String bookImg = "http:" + information.xpath("//a[@id='bookImg']/img/@src").get();
             String bookName = information.xpath("//h1/em/text()").get();
             String bookAuthor = information.xpath("//h1/span/a/text()").get();
             String bookStatus = information.xpath("//p[@class='tag']/span[1]/text()").get();

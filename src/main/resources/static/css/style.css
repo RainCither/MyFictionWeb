@@ -141,7 +141,7 @@ h1{margin-bottom:20px;font-weight:400;font-size:24px;}
 .listmain dl dd{float:left;padding: 0 10px;width:300px;line-height:36px;border-bottom:1px dashed #CCC;font-size:14px;display:block;white-space:nowrap; text-overflow:ellipsis; /* for internet explorer */ overflow:hidden;}
 
 .reader h1{text-align:center;color:#CC3300;line-height:40px;margin:20px 0;}
-.reader .link{border-bottom:1px dotted #E2E2E2;}
+.reader {border-bottom:1px dotted #E2E2E2;}
 .showtxt{padding:10px 30px;line-height:200%;font-size:20px;border-top:1px dashed #CCC;border-bottom:1px dashed #CCC;overflow:hidden;}
 .textinfo{margin:6px 0;font-size:12px;text-align:center;color:#999;}.textinfo a{color:#999;}.textinfo span{padding:0 10px;}
 
@@ -162,11 +162,10 @@ h1{margin-bottom:20px;font-weight:400;font-size:24px;}
 
 .oninfo{float:right;}.onsort{padding-right:6px;border:1px dashed #CCC;float:right;font-size:14px;color:#FF0000;padding-right:6px;}
 
-.link{margin-top:10px;xheight:24px;line-height:24px;text-align:center;overflow:hidden;}
-.footer,.link,.path{font-size:12px;color:#666;}
+.footer,.path{font-size:12px;color:#666;}
 
 .footer {width:960px; margin: 20px auto;line-height: 20px;text-align:center;overflow:hidden;}
-.link a,.footer a{color:#666;display:inline-block;}
+.footer a{color:#666;display:inline-block;}
 .footer hr{border-top:1px dotted #3c3c3c;margin: 10px 0;}
 
 /*临时书架*/

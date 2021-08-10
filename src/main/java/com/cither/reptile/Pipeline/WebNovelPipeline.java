@@ -35,6 +35,12 @@ public class WebNovelPipeline implements Pipeline {
     @Override
     public void process(ResultItems resultItems, Task task) {
 
+        if(resultItems.get("rank") != null){
+            log.info("Success - rank");
+            return;
+        }
+
+
         Fiction fiction = resultItems.get("fiction");
         List<Chapter> chapterList = resultItems.get("chapterList");
         if(fiction == null || chapterList == null){

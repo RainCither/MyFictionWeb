@@ -37,15 +37,28 @@ public class WebNovelUtil {
      */
     public String readWebNovel(String url, int chapterId){
         if(url == null || url.isEmpty()) {
-            return "";
+            return null;
         }
         ResultItems str = Spider.create(readWebNovel).get(url);
         if(str == null){
-            return "";
+            return null;
         }
         String content = str.get("content");
         readService.saveContentById(chapterId, content);
         return content;
+    }
+    /**
+     * 获取详情页
+     * @param url 页面url read.qidian.com
+     */
+    public void infoWebNovel(String url){
+        if(url == null || url.isEmpty()) {
+            return;
+        }
+        Spider.create(webNovelInfo)
+                .addUrl(url)
+                .addPipeline(webNovelPipeline)
+                .start();
     }
 
 
