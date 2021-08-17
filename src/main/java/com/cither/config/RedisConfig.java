@@ -4,12 +4,20 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.*;
+
+import java.lang.reflect.Method;
+import java.time.Duration;
 
 /**
  * Redis 配置类
@@ -17,7 +25,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @date 2021/8/6 17:11
  */
 @Configuration
-public class RedisConfig{
+@EnableCaching
+public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     @SuppressWarnings("all")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
@@ -40,4 +49,55 @@ public class RedisConfig{
         template.afterPropertiesSet();
         return template;
     }
+    /**
+    // 自定义key生成器
+    @Bean
+    public KeyGenerator keyGenerator(){
+        return (o, method, params) ->{
+            StringBuilder sb = new StringBuilder();
+            sb.append(o.getClass().getName()); // 类目
+            sb.append(method.getName()); // 方法名
+            for(Object param: params){
+                sb.append(param.toString()); // 参数名
+            }
+            return sb.toString();
+        };
+    }
+    */
+
+    // 配置缓存管理器
+    @Bean
+    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(20)) // 20m缓存失效
+                // 设置key的序列化方式
+                .serializeKeysWith(keyPair())
+                // 设置value的序列化方式
+                .serializeValuesWith(valuePair())
+                // 不缓存null值
+                .disableCachingNullValues();
+
+        return RedisCacheManager.builder(connectionFactory)
+                .cacheDefaults(config)
+                .transactionAware()
+                .build();
+    }
+
+
+    /**
+     * 配置键序列化
+     * @return StringRedisSerializer
+     */
+    private RedisSerializationContext.SerializationPair<String> keyPair() {
+        return RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer());
+    }
+
+    /**
+     * 配置值序列化，使用 GenericJackson2JsonRedisSerializer 替换默认序列化
+     * @return GenericJackson2JsonRedisSerializer
+     */
+    private RedisSerializationContext.SerializationPair<Object> valuePair() {
+        return RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer());
+    }
+
 }

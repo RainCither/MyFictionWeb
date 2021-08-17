@@ -3,6 +3,7 @@ package com.cither.service;
 import com.cither.dao.ChapterMapper;
 import com.cither.pojo.Chapter;
 import com.cither.pojo.Fiction;
+import com.cither.reptile.util.WebNovelUtil;
 import com.cither.util.RedisUtil;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class ReadService {
     ChapterMapper chapterMapper;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private WebNovelUtil webNovelUtil;
 
     /**
      * 根据书籍id查找
@@ -46,14 +49,23 @@ public class ReadService {
      * @return Chapter
      */
     public Chapter findChapterById(int cId) {
-        Chapter chapter = (Chapter) redisUtil.get("chapterContent:" + cId);
-        if(chapter == null){
-            chapter = chapterMapper.findChapterById(cId);
-            if(chapter == null){
-                return null;
-            }
-            redisUtil.set("chapterContent:" + cId, chapter);
+        Chapter chapter = (Chapter) redisUtil.get("chapter:" + cId);
+        if(chapter != null){
+            return chapter;
         }
+
+        chapter = chapterMapper.findChapterById(cId);
+        if(chapter == null){
+            return null;
+        }
+        //检查正文是否存在
+        if(chapter.getChapter() == null){
+            //获取正文
+            String content = webNovelUtil.readWebNovel(chapter.getChapterLink(), chapter.getCId());
+            chapter.setChapter(content);
+        }
+
+        redisUtil.set("chapter:" + cId, chapter);
         return chapter;
     }
 
@@ -64,14 +76,17 @@ public class ReadService {
      * @return ChapterId
      */
     public Integer findChapterByWhich(int bId, int chapterWhich) {
+        if(chapterWhich < 0){
+            return null;
+        }
         Integer cId = (Integer) redisUtil.get(bId + ":which:" + chapterWhich);
         if(cId == null){
             cId = chapterMapper.findChapterByWhich(bId, chapterWhich);
-            if (cId == null) {
-                return -1;
+            if (cId != null) {
+                redisUtil.set(bId + ":which:" + chapterWhich, cId);
             }
-            redisUtil.set(bId + ":which:" + chapterWhich, cId);
         }
+
         return cId;
     }
 

@@ -59,19 +59,3 @@ function getCookie(name)
     else
         return null;
 }
-
-$(document).ready(function(){
-    $(".showall").click(function(){$(".noshow").toggle();
-    $(".showall").html('');});
-});
-
-function tj(){
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?3806e321b1f2fd3d61de33e5c1302fa5";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-
-}

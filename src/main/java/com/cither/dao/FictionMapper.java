@@ -37,6 +37,14 @@ public interface FictionMapper {
     Fiction findFictionByName(String bName);
 
     /**
+     * 根据id查找
+     * @param bId 书 id
+     * @return fiction
+     */
+    @Select("select b_name from detail where b_id = #{bId}")
+    String findFictionNameById(int bId);
+
+    /**
      * 查询此书是否已入库
      * @param bName 书名
      * @param author 作者

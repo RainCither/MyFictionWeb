@@ -4,8 +4,11 @@ import com.cither.dao.FictionMapper;
 import com.cither.pojo.Chapter;
 import com.cither.pojo.Fiction;
 import com.cither.util.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Service;
  * @date 2021/8/8 8:14
  */
 @Service
+@Slf4j
+@CacheConfig(cacheNames  = "detail")
 public class InfoServer {
 
     @Autowired
@@ -25,18 +30,9 @@ public class InfoServer {
      * @param bId 书 id
      * @return fiction
      */
+    @Cacheable()
     public Fiction findFictionById(int bId) {
-
-        Fiction fictionById = (Fiction) redisUtil.get("bidInfo:" + bId);;
-
-        if (fictionById == null) {
-            fictionById = fictionMapper.findFictionById(bId);
-            if (fictionById != null) {
-                redisUtil.set("bidInfo:" + bId, fictionById);
-            }
-        }
-
-        return fictionById;
+        return fictionMapper.findFictionById(bId);
     }
 
     /**
@@ -55,6 +51,15 @@ public class InfoServer {
      */
     public Fiction findFictionByName(String bName){
         return fictionMapper.findFictionByName(bName);
+    }
+
+    /**
+     * 根据id查找书名
+     * @param bId ID
+     * @return 书名
+     */
+    public String findFictionByName(int bId){
+        return fictionMapper.findFictionNameById(bId);
     }
 
     /**
