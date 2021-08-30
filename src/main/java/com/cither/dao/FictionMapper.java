@@ -56,8 +56,8 @@ public interface FictionMapper {
     /**
      * 查询此书是否已入库
      * @param link 书链接
-     * @return true is save
+     * @return 入库ID
      */
-    @Select("select count(*) from detail where link = #{link}")
-    boolean findFictionExistByLink (String link);
+    @Select("select b_id from detail where link = #{link}")
+    Integer findFictionExistByLink (String link);
 }

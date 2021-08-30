@@ -60,7 +60,7 @@
             <span class="last"
                   th:text="'最后更新：' + ${chapterList.get(clLength).getUpdateTime()}">更新时间：1947-01-01 00:00:00</span>
             <span class="last">最新章节：<a
-                    th:href="@{'/read/' + ${fiction.getBId()} + '/' + ${chapterList.get(clLength).getCId()}}"
+                    th:href="@{'/read/' + ${bId} + '/' + ${chapterList.get(clLength).getCId()}}"
                     th:text="${chapterList.get(clLength).getTitle()}">chapterTitle</a></span>
         </div>
         <div class="intro">
@@ -77,13 +77,13 @@
     <dl>
         <dt th:text="${fiction.getBName()} + '最新章节'"></dt>
         <dd th:each="index : ${#numbers.sequence(0,5)}">
-            <a th:href="@{'/read/' + ${fiction.getBId()} + '/' + ${chapterList.get(clLength - index).getCId()}}"
+            <a th:href="@{'/read/' + ${bId} + '/' + ${chapterList.get(clLength - index).getCId()}}"
                th:text="${chapterList.get(clLength - index).getTitle()}"
                th:title="${chapterList.get(clLength - index).getUpdateTime()}"></a>
         </dd>
         <dt th:text="${fiction.getBName()} + '正文'"></dt>
         <dd th:each="chapter : ${chapterList}">
-            <a th:href="@{'/read/' + ${fiction.getBId()} + '/' + ${chapter.getCId()}}" th:text="${chapter.getTitle()}"
+            <a th:href="@{'/read/' + ${bId} + '/' + ${chapter.getCId()}}" th:text="${chapter.getTitle()}"
                th:title="${chapter.getUpdateTime()}"></a>
         </dd>
     </dl>

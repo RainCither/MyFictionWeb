@@ -2,11 +2,11 @@ package com.cither.service;
 
 import com.cither.dao.ChapterMapper;
 import com.cither.pojo.Chapter;
-import com.cither.pojo.Fiction;
 import com.cither.reptile.util.WebNovelUtil;
 import com.cither.util.RedisUtil;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +21,6 @@ public class ReadService {
     @Autowired
     ChapterMapper chapterMapper;
     @Autowired
-    private RedisUtil redisUtil;
-    @Autowired
     private WebNovelUtil webNovelUtil;
 
     /**
@@ -30,6 +28,7 @@ public class ReadService {
      * @param bId 书 id
      * @return Chapter
      */
+    @Cacheable(cacheNames = "chapterAllList",unless="#result == null")
     public List<Chapter> findListChapterById(int bId) {
         return chapterMapper.findListChapterById(bId);
     }
@@ -39,6 +38,7 @@ public class ReadService {
      * @param bId 书 id
      * @return Chapter
      */
+    @Cacheable(cacheNames = "chapterList",unless="#result == null")
     public List<Chapter> findListChapterInfoById(int bId) {
         return chapterMapper.findListChapterInfoById(bId);
     }
@@ -48,13 +48,9 @@ public class ReadService {
      * @param cId 章节 id
      * @return Chapter
      */
+    @Cacheable(cacheNames = "chapter",unless="#result == null")
     public Chapter findChapterById(int cId) {
-        Chapter chapter = (Chapter) redisUtil.get("chapter:" + cId);
-        if(chapter != null){
-            return chapter;
-        }
-
-        chapter = chapterMapper.findChapterById(cId);
+        Chapter chapter = chapterMapper.findChapterById(cId);
         if(chapter == null){
             return null;
         }
@@ -65,7 +61,6 @@ public class ReadService {
             chapter.setChapter(content);
         }
 
-        redisUtil.set("chapter:" + cId, chapter);
         return chapter;
     }
 
@@ -75,19 +70,12 @@ public class ReadService {
      * @param chapterWhich chapterWhich 章节索引
      * @return ChapterId
      */
+    @Cacheable(cacheNames = "which",unless="#result == null")
     public Integer findChapterByWhich(int bId, int chapterWhich) {
         if(chapterWhich < 0){
             return null;
         }
-        Integer cId = (Integer) redisUtil.get(bId + ":which:" + chapterWhich);
-        if(cId == null){
-            cId = chapterMapper.findChapterByWhich(bId, chapterWhich);
-            if (cId != null) {
-                redisUtil.set(bId + ":which:" + chapterWhich, cId);
-            }
-        }
-
-        return cId;
+        return chapterMapper.findChapterByWhich(bId, chapterWhich);
     }
 
     /**
@@ -100,7 +88,7 @@ public class ReadService {
     }
 
     /**
-     * 根据章节目录id查询
+     * 批量保存章节
      * @param chapterList 书记列表
      * @return 成功 ： 1 失败 ： 0
      */
@@ -114,5 +102,6 @@ public class ReadService {
      * @param content 章节内容
      * @return 成功 ： 1 失败 ： 0
      */
+    @CachePut(cacheNames = "chapter",key = "#cId",unless="#result == null")
     public int saveContentById(int cId, String content){return chapterMapper.saveWarpById(cId, content);}
 }

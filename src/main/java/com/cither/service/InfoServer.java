@@ -1,11 +1,9 @@
 package com.cither.service;
 
 import com.cither.dao.FictionMapper;
-import com.cither.pojo.Chapter;
 import com.cither.pojo.Fiction;
 import com.cither.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,12 +14,9 @@ import org.springframework.stereotype.Service;
  * @date 2021/8/8 8:14
  */
 @Service
-@Slf4j
-@CacheConfig(cacheNames  = "detail")
+
 public class InfoServer {
 
-    @Autowired
-    private RedisUtil redisUtil;
     @Autowired
     FictionMapper fictionMapper;
 
@@ -30,7 +25,7 @@ public class InfoServer {
      * @param bId 书 id
      * @return fiction
      */
-    @Cacheable()
+    @Cacheable(cacheNames  = "detailId")
     public Fiction findFictionById(int bId) {
         return fictionMapper.findFictionById(bId);
     }
@@ -49,6 +44,7 @@ public class InfoServer {
      * @param bName 书名
      * @return fiction
      */
+    @Cacheable(cacheNames  = "detailName")
     public Fiction findFictionByName(String bName){
         return fictionMapper.findFictionByName(bName);
     }
@@ -58,12 +54,13 @@ public class InfoServer {
      * @param bId ID
      * @return 书名
      */
-    public String findFictionByName(int bId){
+    @Cacheable(cacheNames  = "FictionNameId")
+    public String findFictionNameById(int bId){
         return fictionMapper.findFictionNameById(bId);
     }
 
     /**
-     * 查询此书是否已入库
+     * 根据书名作者查询此书是否已入库
      * @param bName 书名
      * @param author 作者
      * @return true is saved
@@ -73,12 +70,13 @@ public class InfoServer {
     }
 
     /**
-     * 查询此书是否已入库
+     * 根据链接查询此书是否已入库
      * @param link 书链接
-     * @return true is save
+     * @return > 0 is save
      */
-    public boolean findFictionExistByLink (String link){
-        return fictionMapper.findFictionExistByLink(link);
+    public Integer findFictionExistByLink (String link){
+        Integer bId = fictionMapper.findFictionExistByLink(link);
+        return  bId == null ? -1 : bId;
     }
 
 }

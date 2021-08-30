@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>书趣阁_笔趣阁</title>
+  <link th:href="@{/static/css/style.css}" rel="stylesheet" type="text/css" />
+  <script src="https://apps.bdimg.com/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script th:src="@{/static/js/noname.js}"></script>
+ </head> 
+ <body> 
+  <div class="header"> 
+   <div class="wrap"> 
+    <div class="logo"> 
+     <a href="/" title="未名亭">未名亭</a>
+    </div> 
+    <script>search();</script> 
+   </div> 
+  </div> 
+  <div class="nav">
+   <ul>
+    <li class="this"><a href="https://www.shuquge.com" title="书趣阁_笔趣阁">首页</a></li>
+  	<li><a href="https://www.shuquge.com/category/1_1.html">玄幻</a></li>
+  	<li><a href="https://www.shuquge.com/category/2_1.html">武侠</a></li>
+  	<li><a href="https://www.shuquge.com/category/3_1.html">都市</a></li>
+  	<li><a href="https://www.shuquge.com/category/4_1.html">历史</a></li>
+  	<li><a href="https://www.shuquge.com/category/5_1.html">侦探</a></li>
+  	<li><a href="https://www.shuquge.com/category/6_1.html">网游</a></li>
+  	<li><a href="https://www.shuquge.com/category/7_1.html">科幻</a></li></li>
+    <li><a href="/top.html">排行榜</a></li>
+    <li><a href="/full/">全本</a></li>
+	  <li><a href="/modules/article/bookcase.php">书架</a></li>
+   </ul>
+  </div>
+
+  <div class="clear"></div>
+  <div class="wrap"> 
+   <div class="hot"> 
+    <div class="l bd">
+     <div class="item" th:each="fiction : ${recommend}">
+      <div class="p10">
+       <div class="image">
+        <a th:href="@{'/info/' + ${fiction.getBId()}}" target="_blank"><img th:src="@{${fiction.getCover()}}" th:alt="${fiction.getBName()}"/></a>
+       </div>
+       <dl>
+        <dt>
+         <span th:text="${fiction.getAuthor()}">作者</span>
+         <a th:href="@{'/info/' + ${fiction.getBId()}}" target="_blank" th:text="${fiction.getBName()}">书名</a>
+        </dt>
+        <dd  th:with="len = ${fiction.getDesc().length() > 72 ? 72 : fiction.getDesc().length()}" th:text="${fiction.getDesc().substring(0,len)}"></dd>
+       </dl>
+      </div>
+     </div>
+    </div> 
+    <div class="r bd"> 
+     <h2>强力推荐</h2> 
+     <ul class="lis">
+      <li th:each="fiction : ${recommendTwo}">
+       <span class="s1" th:text="'['+${fiction.getCat()}+']'"></span>
+       <span class="s2"><a th:href="@{'/info/'+ ${fiction.getBId()}}" th:text="${fiction.getBName()}">书名</a></span>
+       <span class="s5" th:text="${fiction.getAuthor()}">作者</span>
+      </li>
+     </ul> 
+    </div> 
+   </div> 
+   <div class="type bd"> 
+    <div class="block"> 
+     <h2>玄幻魔法</h2> 
+     <div class="p10">
+      <div class="top">
+       <div class="image">
+        <a href="https://www.shuquge.com/txt/5809/index.html" target="_blank"><img src="https://www.shuquge.com/files/article/image/8/8659/8659s.jpg" alt="剑来" /></a>
+       </div>
+       <dl>
+        <dt>
+         <a href="https://www.shuquge.com/txt/8659/index.html" target="_blank">剑来</a>
+        </dt>
+        <dd>
+              大千世界，无奇不有。我陈平安，唯有一剑，可搬山，倒海，降妖，镇魔，敕神，摘星，断江，摧城，开天！        </dd>
+       </dl>
+      </div>
+      <ul>
+       <li><a href="https://www.shuquge.com/txt/68111/index.html" target="_blank" title="万相之王">万相之王</a>/天蚕土豆</li>
+       <li><a href="https://www.shuquge.com/txt/3478/index.html" target="_blank" title="夜的命名术">夜的命名术</a>/会说话的肘子</li>
+       <li><a href="https://www.shuquge.com/txt/5809/index.html" target="_blank" title="元尊">元尊</a>/天蚕土豆</li>
+       <li><a href="https://www.shuquge.com/txt/6057/index.html" target="_blank" title="牧龙师">牧龙师</a>/乱</li>
+       <li><a href="https://www.shuquge.com/txt/7816/index.html" target="_blank" title="沧元图">沧元图</a>/我吃西红柿</li>
+       <li><a href="https://www.shuquge.com/txt/36880/index.html" target="_blank" title="叶尘池瑶小说全文免费阅读">叶尘池瑶小说全文免费阅读</a>/叶尘池瑶</li>
+       <li><a href="https://www.shuquge.com/txt/30353/index.html" target="_blank" title="深空彼岸">深空彼岸</a>/辰东</li>
+       <li><a href="https://www.shuquge.com/txt/100/index.html" target="_blank" title="帝霸">帝霸</a>/厌笔萧生</li>
+       <li><a href="https://www.shuquge.com/txt/94645/index.html" target="_blank" title="星门">星门</a>/老鹰吃小鸡</li>
+       <li><a href="https://www.shuquge.com/txt/8279/index.html" target="_blank" title="伏天氏">伏天氏</a>/净无痕</li>
+       <li><a href="https://www.shuquge.com/txt/144610/index.html" target="_blank" title="不科学御兽">不科学御兽</a>/轻泉流响</li>
+       <li><a href="https://www.shuquge.com/txt/112748/index.html" target="_blank" title="太荒吞天诀">太荒吞天诀</a>/铁马飞桥</li>
+      </ul>
+     </div> 
+    </div> 
+    <div class="block"> 
+     <h2>武侠修真</h2> 
+     <div class="p10">
+      <div class="top">
+       <div class="image">
+        <a href="https://www.shuquge.com/txt/112748/index.html" target="_blank"><img src="https://www.shuquge.com/files/article/image/9/9832/9832s.jpg" alt="大奉打更人" /></a>
+       </div>
+       <dl>
+        <dt>
+         <a href="https://www.shuquge.com/txt/9832/index.html" target="_blank">大奉打更人</a>
+        </dt>
+        <dd>
+              这个世界，有儒；有道；有佛；有妖；有术士。    警校毕业的许七安幽幽醒来，发现自己身处牢狱之中，三日后流放边陲.....    他起初的目的只是自保，顺便在这个没有人权的社会里当个富家翁悠闲度日。    ......    多年后，许七安回首前尘，身后是早已逝去的敌人和朋友，以及累累白骨。    滚滚长江东逝水，浪花淘尽英雄，是非成败转头空。    青山依旧在，几度夕阳红。    PS：本书不悲剧！        </dd>
+       </dl>
+      </div>
+      <ul>
+       <li><a href="https://www.shuquge.com/txt/34919/index.html" target="_blank" title="大梦主">大梦主</a>/忘语</li>
+       <li><a href="https://www.shuquge.com/txt/9880/index.html" target="_blank" title="极品家教">极品家教</a>/马可·菠萝</li>
+       <li><a href="https://www.shuquge.com/txt/119916/index.html" target="_blank" title="洪主">洪主</a>/烽仙</li>
+       <li><a href="https://www.shuquge.com/txt/73792/index.html" target="_blank" title="道君">道君</a>/跃千愁</li>
+       <li><a href="https://www.shuquge.com/txt/83354/index.html" target="_blank" title="恐怖复苏">恐怖复苏</a>/佛前献花</li>
+       <li><a href="https://www.shuquge.com/txt/138433/index.html" target="_blank" title="镇妖博物馆">镇妖博物馆</a>/阎ZK</li>
+       <li><a href="https://www.shuquge.com/txt/123995/index.html" target="_blank" title="混天大圣">混天大圣</a>/封七月</li>
+       <li><a href="https://www.shuquge.com/txt/63542/index.html" target="_blank" title="三寸人间">三寸人间</a>/耳根</li>
+       <li><a href="https://www.shuquge.com/txt/112908/index.html" target="_blank" title="明尊">明尊</a>/辰一十一</li>
+       <li><a href="https://www.shuquge.com/txt/141615/index.html" target="_blank" title="太莽">太莽</a>/关关公子</li>
+       <li><a href="https://www.shuquge.com/txt/447/index.html" target="_blank" title="百炼成仙">百炼成仙</a>/幻雨</li>
+       <li><a href="https://www.shuquge.com/txt/4929/index.html" target="_blank" title="诛仙">诛仙</a>/萧鼎</li>
+      </ul>
+     </div> 
+    </div> 
+    <div class="block"> 
+     <h2>都市言情</h2> 
+     <div class="p10">
+      <div class="top">
+       <div class="image">
+        <a href="https://www.shuquge.com/txt/4929/index.html" target="_blank"><img src="https://www.shuquge.com/files/article/image/99/99462/99462s.jpg" alt="豪婿" /></a>
+       </div>
+       <dl>
+        <dt>
+         <a href="https://www.shuquge.com/txt/99462/index.html" target="_blank">豪婿</a>
+        </dt>
+        <dd>
+              入赘三年，所有人都以为可以骑在我头上。而我，只等她牵起我的手，便可以给她整个世界。    新书期一天两更，上架后三更。喜欢的多多支持，点个收藏，谢谢各位大佬。        </dd>
+       </dl>
+      </div>
+      <ul>
+       <li><a href="https://www.shuquge.com/txt/74961/index.html" target="_blank" title="官神">官神</a>/何常在</li>
+       <li><a href="https://www.shuquge.com/txt/96180/index.html" target="_blank" title="史上最强炼气期">史上最强炼气期</a>/李道然</li>
+       <li><a href="https://www.shuquge.com/txt/7597/index.html" target="_blank" title="万族之劫">万族之劫</a>/老鹰吃小鸡</li>
+       <li><a href="https://www.shuquge.com/txt/8685/index.html" target="_blank" title="医婿">医婿</a>/叶凡</li>
+       <li><a href="https://www.shuquge.com/txt/34004/index.html" target="_blank" title="男欢女爱">男欢女爱</a>/久石</li>
+       <li><a href="https://www.shuquge.com/txt/105484/index.html" target="_blank" title="王婿">王婿</a>/叶凡</li>
+       <li><a href="https://www.shuquge.com/txt/125497/index.html" target="_blank" title="全职艺术家">全职艺术家</a>/我最白</li>
+       <li><a href="https://www.shuquge.com/txt/66099/index.html" target="_blank" title="韩三千苏迎夏">韩三千苏迎夏</a>/绝人</li>
+       <li><a href="https://www.shuquge.com/txt/1655/index.html" target="_blank" title="稳住别浪">稳住别浪</a>/跳舞</li>
+       <li><a href="https://www.shuquge.com/txt/33476/index.html" target="_blank" title="万古神帝">万古神帝</a>/飞天鱼</li>
+       <li><a href="https://www.shuquge.com/txt/9439/index.html" target="_blank" title="韩三千苏迎夏全文免费阅读">韩三千苏迎夏全文免费阅读</a>/豪婿</li>
+       <li><a href="https://www.shuquge.com/txt/110212/index.html" target="_blank" title="逆流1982">逆流1982</a>/刀削面加蛋</li>
+      </ul>
+     </div> 
+    </div> 
+    <div class="block"> 
+     <h2>历史军事</h2> 
+     <div class="p10">
+      <div class="top">
+       <div class="image">
+        <a href="https://www.shuquge.com/txt/110212/index.html" target="_blank"><img src="https://www.shuquge.com/files/article/image/112/112161/112161s.jpg" alt="绍宋" /></a>
+       </div>
+       <dl>
+        <dt>
+         <a href="https://www.shuquge.com/txt/112161/index.html" target="_blank">绍宋</a>
+        </dt>
+        <dd>
+              绍者，一曰继；二曰导。    公元1127年，北宋灭亡。旋即，皇九子赵构在万众期待中于商丘登基，继承宋统，改元建炎。    然而，三个月内，李纲罢相，陈东被杀，岳飞被驱逐出军，宗泽被遗弃东京，河北抗金布置被全面裁撤……经过这么多努力之后，满朝文武终于统一了思想，定下了拥护赵官家南下淮甸转扬州的辉煌抗金路线。    不过刚一启程，在亳州明道宫参拜了道祖之后，这位赵官家便一头栽入了闻名天下的九龙井中，起来后就不认得自己心腹是谁了！    朕要抗金！可朕的心腹都在何处？！    这是一个来自于九百年后灵魂的真诚呐喊，他在无可奈何继承了大宋的名号后，更要将这个朝廷与天下导向一条新路。    故称绍宋。        </dd>
+       </dl>
+      </div>
+      <ul>
+       <li><a href="https://www.shuquge.com/txt/91121/index.html" target="_blank" title="我不是野人">我不是野人</a>/孑与2</li>
+       <li><a href="https://www.shuquge.com/txt/8194/index.html" target="_blank" title="明天下">明天下</a>/孑与2</li>
+       <li><a href="https://www.shuquge.com/txt/142557/index.html" target="_blank" title="演武令">演武令</a>/鱼儿小小</li>
+       <li><a href="https://www.shuquge.com/txt/136031/index.html" target="_blank" title="黄天之世">黄天之世</a>/罗小明</li>
+       <li><a href="https://www.shuquge.com/txt/132042/index.html" target="_blank" title="昭周">昭周</a>/漫客1</li>
+       <li><a href="https://www.shuquge.com/txt/5769/index.html" target="_blank" title="小阁老">小阁老</a>/三戒大师</li>
+       <li><a href="https://www.shuquge.com/txt/135202/index.html" target="_blank" title="从亮剑开始崛起">从亮剑开始崛起</a>/我的头像是猫</li>
+       <li><a href="https://www.shuquge.com/txt/83267/index.html" target="_blank" title="覆汉">覆汉</a>/榴弹怕水</li>
+       <li><a href="https://www.shuquge.com/txt/145508/index.html" target="_blank" title="大秦，造反被祖龙窃听心声">大秦，造反被祖龙窃听心声</a>/忘掉就好了</li>
+       <li><a href="https://www.shuquge.com/txt/116230/index.html" target="_blank" title="红楼春">红楼春</a>/屋外风吹凉</li>
+       <li><a href="https://www.shuquge.com/txt/84830/index.html" target="_blank" title="枭臣">枭臣</a>/更俗</li>
+       <li><a href="https://www.shuquge.com/txt/74983/index.html" target="_blank" title="三国之巅峰召唤">三国之巅峰召唤</a>/流香千古</li>
+      </ul>
+     </div> 
+    </div> 
+    <div class="block"> 
+     <h2>侦探推理</h2> 
+     <div class="p10">
+      <div class="top">
+       <div class="image">
+        <a href="https://www.shuquge.com/txt/74983/index.html" target="_blank"><img src="https://www.shuquge.com/files/article/image/38/38478/38478s.jpg" alt="劫天运" /></a>
+       </div>
+       <dl>
+        <dt>
+         <a href="https://www.shuquge.com/txt/38478/index.html" target="_blank">劫天运</a>
+        </dt>
+        <dd>
+              我从出生前就给人算计了，五阴俱全，天生招厉鬼，懂行的先生说我活不过七岁，死后是要给人养成血衣小鬼害人的。 外婆为了救我，给我娶了童养媳，让我过起了安生日子，虽然后来我发现媳妇姐姐不是人…… 从小苟延馋喘的我能活到现在，本已习惯逆来顺受，可唯独外婆被人害死了这件事。 为此，我不顾因果报应，继承了外婆养鬼的职业，发誓要把害死她的人全都送下地狱。 微博连接：
+        </dd>
+       </dl>
+      </div>
+      <ul>
+       <li><a href="https://www.shuquge.com/txt/42828/index.html" target="_blank" title="三国之兵临天下">三国之兵临天下</a>/高月</li>
+       <li><a href="https://www.shuquge.com/txt/27817/index.html" target="_blank" title="心理罪">心理罪</a>/不是何阳</li>
+       <li><a href="https://www.shuquge.com/txt/39016/index.html" target="_blank" title="麻衣神算子">麻衣神算子</a>/骑马钓鱼</li>
+       <li><a href="https://www.shuquge.com/txt/41956/index.html" target="_blank" title="无上传承">无上传承</a>/落尘</li>
+       <li><a href="https://www.shuquge.com/txt/44410/index.html" target="_blank" title="陌野村医">陌野村医</a>/陌原</li>
+       <li><a href="https://www.shuquge.com/txt/37967/index.html" target="_blank" title="不要啊棺人">不要啊棺人</a>/月华洒蓉</li>
+       <li><a href="https://www.shuquge.com/txt/41188/index.html" target="_blank" title="极灵混沌决">极灵混沌决</a>/若雨随风</li>
+       <li><a href="https://www.shuquge.com/txt/58449/index.html" target="_blank" title="魔兽战神">魔兽战神</a>/龙人</li>
+       <li><a href="https://www.shuquge.com/txt/42939/index.html" target="_blank" title="情天可补">情天可补</a>/木士</li>
+       <li><a href="https://www.shuquge.com/txt/37858/index.html" target="_blank" title="捉蛊记">捉蛊记</a>/南无袈裟理科佛、</li>
+       <li><a href="https://www.shuquge.com/txt/37856/index.html" target="_blank" title="最后一个阴阳师">最后一个阴阳师</a>/三两二钱、</li>
+       <li><a href="https://www.shuquge.com/txt/45926/index.html" target="_blank" title="网游之血牛魔导师">网游之血牛魔导师</a>/东方悟</li>
+      </ul>
+     </div> 
+    </div> 
+    <div class="block"> 
+     <h2>网游动漫</h2> 
+     <div class="p10">
+      <div class="top">
+       <div class="image">
+        <a href="https://www.shuquge.com/txt/45926/index.html" target="_blank"><img src="https://www.shuquge.com/files/article/image/9/9774/9774s.jpg" alt="杨辰秦惜" /></a>
+       </div>
+       <dl>
+        <dt>
+         <a href="https://www.shuquge.com/txt/9774/index.html" target="_blank">杨辰秦惜</a>
+        </dt>
+        <dd>
+                  </dd>
+       </dl>
+      </div>
+      <ul>
+       <li><a href="https://www.shuquge.com/txt/141911/index.html" target="_blank" title="术师手册">术师手册</a>/听日</li>
+       <li><a href="https://www.shuquge.com/txt/73988/index.html" target="_blank" title="轮回乐园">轮回乐园</a>/那一只蚊子</li>
+       <li><a href="https://www.shuquge.com/txt/92674/index.html" target="_blank" title="妖龙古帝">妖龙古帝</a>/遥望南山</li>
+       <li><a href="https://www.shuquge.com/txt/73488/index.html" target="_blank" title="天王殿">天王殿</a>/夏天周婉秋</li>
+       <li><a href="https://www.shuquge.com/txt/73523/index.html" target="_blank" title="超神机械师">超神机械师</a>/齐佩甲</li>
+       <li><a href="https://www.shuquge.com/txt/124261/index.html" target="_blank" title="柯学验尸官">柯学验尸官</a>/河流之汪</li>
+       <li><a href="https://www.shuquge.com/txt/134186/index.html" target="_blank" title="柯学捡尸人">柯学捡尸人</a>/仙舟</li>
+       <li><a href="https://www.shuquge.com/txt/135574/index.html" target="_blank" title="我的云养女友">我的云养女友</a>/常世</li>
+       <li><a href="https://www.shuquge.com/txt/87150/index.html" target="_blank" title="叶辰萧初然">叶辰萧初然</a>/叶辰萧初然</li>
+       <li><a href="https://www.shuquge.com/txt/107034/index.html" target="_blank" title="亏成首富从游戏开始">亏成首富从游戏开始</a>/绝不咸鱼</li>
+       <li><a href="https://www.shuquge.com/txt/10768/index.html" target="_blank" title="龙凤双宝：厉少的寻妻之路">龙凤双宝：厉少的寻妻之路</a>/初颜</li>
+       <li><a href="https://www.shuquge.com/txt/77978/index.html" target="_blank" title="网游之最强传说">网游之最强传说</a>/八二年自来水</li>
+      </ul>
+     </div> 
+    </div> 
+   </div> 
+   <div class="up"> 
+    <div class="l bd"> 
+     <h2> 最近更新小说列表</h2> 
+     <ul>
+      <li><span class="s1">[玄幻魔法]</span><span class="s2"><a href="https://www.shuquge.com/txt/131843/index.html">万气争天</a></span><span class="s3"><a href="https://www.shuquge.com/txt/131843/39994990.html">第四百零二章 反对</a></span><span class="s4">不夜愁苗</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/144120/index.html">医婿判官</a></span><span class="s3"><a href="https://www.shuquge.com/txt/144120/39994986.html">第344章:让你三招</a></span><span class="s4">楚铁</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/145465/index.html">落入掌心</a></span><span class="s3"><a href="https://www.shuquge.com/txt/145465/39994971.html">第一百三十五章   第一次见面</a></span><span class="s4">染萌</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[历史军事]</span><span class="s2"><a href="https://www.shuquge.com/txt/144223/index.html">大明之东江再起</a></span><span class="s3"><a href="https://www.shuquge.com/txt/144223/39994974.html">第202章 破甲！</a></span><span class="s4">船二</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/154/index.html">韩娱之勋</a></span><span class="s3"><a href="https://www.shuquge.com/txt/154/39995005.html">第两千两百一十四章 新人设</a></span><span class="s4">呓语痴人</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[其他类型]</span><span class="s2"><a href="https://www.shuquge.com/txt/142969/index.html">亲爱的安东尼</a></span><span class="s3"><a href="https://www.shuquge.com/txt/142969/39994966.html">第一百四十四章 母亲节</a></span><span class="s4">徐木栀</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[其他类型]</span><span class="s2"><a href="https://www.shuquge.com/txt/141600/index.html">寒门嫡女有空间</a></span><span class="s3"><a href="https://www.shuquge.com/txt/141600/39994999.html">第853章，刺客</a></span><span class="s4">画笔敲敲</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[其他类型]</span><span class="s2"><a href="https://www.shuquge.com/txt/143991/index.html">腹黑千金甜爆了</a></span><span class="s3"><a href="https://www.shuquge.com/txt/143991/39994978.html">第七十六章：别提有多憋屈</a></span><span class="s4">任祯</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[科幻灵异]</span><span class="s2"><a href="https://www.shuquge.com/txt/105954/index.html">快穿之养老攻略</a></span><span class="s3"><a href="https://www.shuquge.com/txt/105954/39994998.html">第二章：魔门女帝逆天争道（2）</a></span><span class="s4">快穿狂魔</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[科幻灵异]</span><span class="s2"><a href="https://www.shuquge.com/txt/145299/index.html">无限世界的老司机</a></span><span class="s3"><a href="https://www.shuquge.com/txt/145299/39994984.html">第二百五十三章 白蛇走江二</a></span><span class="s4">朽木为工</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/130215/index.html">我的九个阴阳师姐姐</a></span><span class="s3"><a href="https://www.shuquge.com/txt/130215/39994983.html">第1147章   规矩</a></span><span class="s4">凡有相</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[历史军事]</span><span class="s2"><a href="https://www.shuquge.com/txt/145929/index.html">亮剑之开局一个团</a></span><span class="s3"><a href="https://www.shuquge.com/txt/145929/39994977.html">第一百章 到处都是日军（下）</a></span><span class="s4">重装坦克</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/89534/index.html">重生之都市仙尊</a></span><span class="s3"><a href="https://www.shuquge.com/txt/89534/39994981.html">第2779章 妈妈的爱</a></span><span class="s4">洛书</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[玄幻魔法]</span><span class="s2"><a href="https://www.shuquge.com/txt/147530/index.html">师尊今天也很虚伪</a></span><span class="s3"><a href="https://www.shuquge.com/txt/147530/39994972.html">第三十二章：重伤</a></span><span class="s4">双生橙子</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/143547/index.html">老师快来</a></span><span class="s3"><a href="https://www.shuquge.com/txt/143547/39994996.html">第158章 吴大鹏打小报告</a></span><span class="s4">夜独醉</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[玄幻魔法]</span><span class="s2"><a href="https://www.shuquge.com/txt/147562/index.html">剑仙主宰</a></span><span class="s3"><a href="https://www.shuquge.com/txt/147562/39995001.html">第十五章 寒冰奇毒</a></span><span class="s4">向星龙</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[科幻灵异]</span><span class="s2"><a href="https://www.shuquge.com/txt/137667/index.html">心灵学者</a></span><span class="s3"><a href="https://www.shuquge.com/txt/137667/39995006.html">第八十六章 木偶之谜</a></span><span class="s4">稀饭悬浮猫</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/144989/index.html">武神赘婿</a></span><span class="s3"><a href="https://www.shuquge.com/txt/144989/39994985.html">第187章 家族命运</a></span><span class="s4">木易青鹏</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[科幻灵异]</span><span class="s2"><a href="https://www.shuquge.com/txt/78341/index.html">暗影熊提伯斯的位面之旅</a></span><span class="s3"><a href="https://www.shuquge.com/txt/78341/39994976.html">第1535章ヾ(=･ω･=)o你不老实！</a></span><span class="s4">暗影熊</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[网游动漫]</span><span class="s2"><a href="https://www.shuquge.com/txt/147123/index.html">抱歉，我很强</a></span><span class="s3"><a href="https://www.shuquge.com/txt/147123/39994995.html">第二十一章 杀猪啦</a></span><span class="s4">吴喵喵呀</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[其他类型]</span><span class="s2"><a href="https://www.shuquge.com/txt/145877/index.html">都市最强炼药师</a></span><span class="s3"><a href="https://www.shuquge.com/txt/145877/39995002.html">第一百四十一章 章节名称处理伤口</a></span><span class="s4">冬日絮语</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[其他类型]</span><span class="s2"><a href="https://www.shuquge.com/txt/143292/index.html">总统阁下，请赐教</a></span><span class="s3"><a href="https://www.shuquge.com/txt/143292/39994979.html">第八十五章  绝版礼服，晚宴开始</a></span><span class="s4">苏晴薇</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[其他类型]</span><span class="s2"><a href="https://www.shuquge.com/txt/141309/index.html">娇妻难撩：公主，臣服</a></span><span class="s3"><a href="https://www.shuquge.com/txt/141309/39994965.html">第二百四十一章 被瞒下的秘密</a></span><span class="s4">荧桃燊燊</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[科幻灵异]</span><span class="s2"><a href="https://www.shuquge.com/txt/146523/index.html">我从末世归来</a></span><span class="s3"><a href="https://www.shuquge.com/txt/146523/39994993.html">第605章 打赢我，你就拥有话语权</a></span><span class="s4">小丑</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[科幻灵异]</span><span class="s2"><a href="https://www.shuquge.com/txt/146757/index.html">漫威：我和圣主相依为命那些年</a></span><span class="s3"><a href="https://www.shuquge.com/txt/146757/39994997.html">第七十九章 召唤塔拉？？</a></span><span class="s4">我的郑姬</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/143019/index.html">阴间有个小卖部</a></span><span class="s3"><a href="https://www.shuquge.com/txt/143019/39995004.html">第二百七十四章：谁在报信？（下）</a></span><span class="s4">姜牧云</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[其他类型]</span><span class="s2"><a href="https://www.shuquge.com/txt/141347/index.html">龙王帝师</a></span><span class="s3"><a href="https://www.shuquge.com/txt/141347/39994992.html">第530章 狼爷抉择（二更）</a></span><span class="s4">通臂火猿</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[都市言情]</span><span class="s2"><a href="https://www.shuquge.com/txt/145321/index.html">禁地探险：扮演冯宝宝，队友麒麟小哥</a></span><span class="s3"><a href="https://www.shuquge.com/txt/145321/39995000.html">第六十四章 差点要完美扮演</a></span><span class="s4">七爷荒唐</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[网游动漫]</span><span class="s2"><a href="https://www.shuquge.com/txt/82146/index.html">仙魔三国大玩家</a></span><span class="s3"><a href="https://www.shuquge.com/txt/82146/39995003.html">第372章 这叫烽火戏诸侯</a></span><span class="s4">大烟缸</span><span class="s5">08-24</span></li>
+      <li><span class="s1">[其他类型]</span><span class="s2"><a href="https://www.shuquge.com/txt/141459/index.html">远古种田之山里汉子路子野</a></span><span class="s3"><a href="https://www.shuquge.com/txt/141459/39994987.html">第一百九十七章 炖一锅喷香的穿山甲汤</a></span><span class="s4">狐家小酒</span><span class="s5">08-24</span></li>
+     </ul> 
+    </div> 
+    <div class="r bd"> 
+     <h2>最新入库小说</h2> 
+     <ul>
+      <li><span class="s1">[都市]</span><span class="s2"><a href="https://www.shuquge.com/txt/147574/index.html">仙王奶爸</a></span><span class="s5">单王张</span></li>
+      <li><span class="s1">[网游]</span><span class="s2"><a href="https://www.shuquge.com/txt/147572/index.html">我和女馆长的恋爱日常</a></span><span class="s5">家住饲养员</span></li>
+      <li><span class="s1">[玄幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147571/index.html">神魔之恋我在这里等你</a></span><span class="s5">笑看尼姑</span></li>
+      <li><span class="s1">[网游]</span><span class="s2"><a href="https://www.shuquge.com/txt/147569/index.html">橘尼尔</a></span><span class="s5">荼萧荣</span></li>
+      <li><span class="s1">[都市]</span><span class="s2"><a href="https://www.shuquge.com/txt/147567/index.html">决定躺平的我又成巨星了</a></span><span class="s5">月亮有个坑</span></li>
+      <li><span class="s1">[武侠]</span><span class="s2"><a href="https://www.shuquge.com/txt/147556/index.html">巫妖大战前，人族三千大罗被金榜曝光了</a></span><span class="s5">绿色的海绵宝宝</span></li>
+      <li><span class="s1">[科幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147568/index.html">探险笔记之故海神墟</a></span><span class="s5">姜穆三</span></li>
+      <li><span class="s1">[其他]</span><span class="s2"><a href="https://www.shuquge.com/txt/147580/index.html">我们曾在一起</a></span><span class="s5">旧月安好</span></li>
+      <li><span class="s1">[其他]</span><span class="s2"><a href="https://www.shuquge.com/txt/147554/index.html">喝的什么水，狼王这个蓝颜祸水！</a></span><span class="s5">橘子泡可乐</span></li>
+      <li><span class="s1">[其他]</span><span class="s2"><a href="https://www.shuquge.com/txt/147582/index.html">总裁老公每天都想转正</a></span><span class="s5">唐大喜喜</span></li>
+      <li><span class="s1">[网游]</span><span class="s2"><a href="https://www.shuquge.com/txt/147564/index.html">开局冠军，我成了高大叔</a></span><span class="s5">信豪哥不奔波</span></li>
+      <li><span class="s1">[武侠]</span><span class="s2"><a href="https://www.shuquge.com/txt/147559/index.html">神明的火花</a></span><span class="s5">白残无香</span></li>
+      <li><span class="s1">[玄幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147562/index.html">剑仙主宰</a></span><span class="s5">向星龙</span></li>
+      <li><span class="s1">[科幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147581/index.html">黑科技：我的玩具震惊全球</a></span><span class="s5">爷无处不在</span></li>
+      <li><span class="s1">[玄幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147575/index.html">掌破仙局</a></span><span class="s5">青峰道士</span></li>
+      <li><span class="s1">[科幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147565/index.html">从一人开始的蛊师</a></span><span class="s5">二两.</span></li>
+      <li><span class="s1">[网游]</span><span class="s2"><a href="https://www.shuquge.com/txt/147570/index.html">绑定气运：开局获得白胡子模板</a></span><span class="s5">一只可爱的兔子</span></li>
+      <li><span class="s1">[玄幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147573/index.html">荒岛系统</a></span><span class="s5">赛萌</span></li>
+      <li><span class="s1">[玄幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147555/index.html">开局一把大锈刀</a></span><span class="s5">缘梦西游</span></li>
+      <li><span class="s1">[都市]</span><span class="s2"><a href="https://www.shuquge.com/txt/147578/index.html">我的读者女友有点妖</a></span><span class="s5">不菲小九韭</span></li>
+      <li><span class="s1">[武侠]</span><span class="s2"><a href="https://www.shuquge.com/txt/147583/index.html">武林英杰</a></span><span class="s5">骁张的语</span></li>
+      <li><span class="s1">[科幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147566/index.html">我在诸天影视深蓝加点</a></span><span class="s5">星晴龙卷风</span></li>
+      <li><span class="s1">[科幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147558/index.html">开局：一个民国位面</a></span><span class="s5">龙升云霄</span></li>
+      <li><span class="s1">[科幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147576/index.html">惊异剧本杀</a></span><span class="s5">酵姆</span></li>
+      <li><span class="s1">[玄幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147557/index.html">西游：方寸山上的绝世大能</a></span><span class="s5">落雨禅</span></li>
+      <li><span class="s1">[玄幻]</span><span class="s2"><a href="https://www.shuquge.com/txt/147560/index.html">一睡百年，开局成为签到系法爷</a></span><span class="s5">最爱吃提子</span></li>
+      <li><span class="s1">[武侠]</span><span class="s2"><a href="https://www.shuquge.com/txt/147577/index.html">天刀之狸猫后传</a></span><span class="s5">不哭豆子</span></li>
+      <li><span class="s1">[其他]</span><span class="s2"><a href="https://www.shuquge.com/txt/147561/index.html">诡异：我的能力是看见文字</a></span><span class="s5">阿柴吃粥</span></li>
+      <li><span class="s1">[都市]</span><span class="s2"><a href="https://www.shuquge.com/txt/147563/index.html">觉醒创世纪</a></span><span class="s5">请让小杨来辅</span></li>
+      <li><span class="s1">[网游]</span><span class="s2"><a href="https://www.shuquge.com/txt/147579/index.html">海贼之鱼人传说</a></span><span class="s5">柴油发电鸡</span></li>
+     </ul> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="footer"> 
+   <div class="link"> 
+    <a href="https://www.shuquge.com/txt/5809/index.html" target="_blank" style="color:">元尊</a>、
+    <a href="https://www.shuquge.com/txt/8072/index.html" target="_blank" style="color:">飞剑问道</a>、
+
+
+		<a href="http://www.vipxs.la" target="_blank" style="color:">笔趣阁小说网</a>、
+
+
+
+
+		<a href="http://www.rijixinqing.com/" target="_blank" style="color:">经典语录</a>、
+
+
+		<a href="https://www.shuquge.com/" target="_blank" style="color:">书趣阁_笔趣阁</a>、
+    <a href="https://www.shuquge.com/txt/5809/index.html" target="_blank" style="color:">元尊最新章节</a>、
+    <a href="https://www.shuquge.com/txt/8072/index.html" target="_blank" style="color:">飞剑问道最新章节</a>
+   </div> 
+   <hr /> 
+   <p>本站所有小说为转载作品，所有章节均由网友上传，转载至本站只是为了宣传本书让更多读者欣赏。</p>
+   <p>Copyright &copy; 2015 书趣阁_笔趣阁 All Rights Reserved.</p> 
+   <script>tj();</script> 
+  </div>  
+ </body>
+</html>

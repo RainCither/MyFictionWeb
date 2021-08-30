@@ -18,6 +18,8 @@ import org.springframework.data.redis.serializer.*;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Redis 配置类
@@ -76,9 +78,17 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .serializeValuesWith(valuePair())
                 // 不缓存null值
                 .disableCachingNullValues();
+        // 针对不同cacheName，设置不同的过期时间
+        Map<String, RedisCacheConfiguration> initialCacheConfiguration = new HashMap<String, RedisCacheConfiguration>() {{
+            put("recommend", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1))); //1小时
+            put("recommendTwo", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10))); // 10分钟
+            // ...
+        }};
+
 
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(config)
+                .withInitialCacheConfigurations(initialCacheConfiguration)
                 .transactionAware()
                 .build();
     }

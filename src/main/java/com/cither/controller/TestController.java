@@ -1,8 +1,6 @@
 package com.cither.controller;
 
 import com.cither.pojo.Chapter;
-import com.cither.reptile.Pipeline.WebNovelPipeline;
-import com.cither.reptile.parsing.WebNovelInfo;
 import com.cither.reptile.util.WebNovelUtil;
 import com.cither.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import us.codecraft.webmagic.Spider;
 
 /**
  * @author raincither
@@ -35,7 +32,7 @@ public class TestController {
 
     @RequestMapping("/magic")
     public Boolean magic(){
-        webNovelUtil.getWebNovelRank();
+        webNovelUtil.getRankWebNovel();
         return true;
     }
 

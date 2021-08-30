@@ -1,5 +1,6 @@
 package com.cither.reptile.parsing;
 
+import com.cither.reptile.util.WebNovelUtil;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -12,10 +13,6 @@ import us.codecraft.webmagic.selector.Html;
 @Component
 public class ReadWebNovel implements PageProcessor {
 
-    /**
-     * 部分一：抓取网站的相关配置，包括编码、抓取间隔、重试次数等
-     */
-    private final Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
 
     /**
      * process the page, extract urls to fetch, extract the data and store
@@ -24,12 +21,13 @@ public class ReadWebNovel implements PageProcessor {
      */
     @Override
     public void process(Page page) {
-        if(!page.getUrl().regex("read.qidian.com").match()){
-            page.putField("content", null);
-            return;
-        }
         Html html = page.getHtml();
         String readContent = html.xpath("//div[@class='read-content']/tidyText()").get();
+
+        if(readContent == null){
+            return;
+        }
+
         String content = readContent.replaceAll("\n\n", "\n");
         page.putField("content", content);
     }
@@ -42,6 +40,6 @@ public class ReadWebNovel implements PageProcessor {
      */
     @Override
     public Site getSite() {
-        return site;
+        return WebNovelUtil.SITE;
     }
 }

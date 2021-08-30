@@ -35,18 +35,15 @@ public class WebNovelPipeline implements Pipeline {
     @Override
     public void process(ResultItems resultItems, Task task) {
 
-        if(resultItems.get("rank") != null){
-            log.info("Success - rank");
+        //检查错误
+        if(resultItems.get("error") != null){
+            log.error(resultItems.get("error"));
             return;
         }
-
 
         Fiction fiction = resultItems.get("fiction");
         List<Chapter> chapterList = resultItems.get("chapterList");
-        if(fiction == null || chapterList == null){
-            log.info("WebNovelPipeline - fail - {}", (Object) resultItems.get("error"));
-            return;
-        }
+
         if(!infoServer.findFictionExist(fiction.getBName(), fiction.getAuthor())){
             infoServer.saveFiction(fiction);
             for (Chapter chapter : chapterList) {

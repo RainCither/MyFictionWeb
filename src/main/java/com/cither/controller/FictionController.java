@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,19 @@ public class FictionController {
     private InfoServer infoServer;
     @Autowired
     private ReadService readService;
+
+    @GetMapping("/")
+    public String fictionMain(Model model){
+
+        List<Fiction> recommend = new ArrayList<>();
+        List<Fiction> recommendTwo = new ArrayList<>();
+
+
+
+        model.addAttribute("recommend",recommend);
+        model.addAttribute("recommendTwo",recommendTwo);
+        return "index";
+    }
 
 
     @GetMapping("/info/{bId}")
@@ -55,10 +69,11 @@ public class FictionController {
         String[] contentList = chapter.getChapter().split("\n");
 
         //获取上下文章id
-        int proChapterId =  readService.findChapterByWhich(bId,chapter.getChapterWhich() - 1);
-        int nextChapterId = readService.findChapterByWhich(bId,chapter.getChapterWhich() + 1);
+        Integer proChapterId =  readService.findChapterByWhich(bId,chapter.getChapterWhich() - 1);
+        Integer nextChapterId = readService.findChapterByWhich(bId,chapter.getChapterWhich() + 1);
 
-        model.addAttribute("fiction", infoServer.findFictionByName(bId));
+        model.addAttribute("bName", infoServer.findFictionNameById(bId));
+        model.addAttribute("bId", bId);
         model.addAttribute("chapter", chapter);
         model.addAttribute("contentList", contentList);
         model.addAttribute("proChapterId", proChapterId);

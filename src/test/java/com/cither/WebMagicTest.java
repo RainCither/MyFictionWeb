@@ -1,13 +1,8 @@
 package com.cither;
 
-import com.cither.reptile.Pipeline.WebNovelPipeline;
-import com.cither.reptile.parsing.ReadWebNovel;
-import com.cither.reptile.parsing.WebNovelInfo;
+import com.cither.reptile.parsing.InfoWebNovel;
 import org.junit.jupiter.api.Test;
-import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.scheduler.BloomFilterDuplicateRemover;
-import us.codecraft.webmagic.scheduler.QueueScheduler;
 import us.codecraft.webmagic.selector.Html;
 
 /**
@@ -18,7 +13,7 @@ public class WebMagicTest {
 
     @Test
     public void test1(){
-        Spider.create(new WebNovelInfo())
+        Spider.create(new InfoWebNovel())
                 .addUrl("https://book.qidian.com/info/1016311897/")
                 .run();
     }

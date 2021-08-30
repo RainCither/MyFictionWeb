@@ -1,33 +1,46 @@
 package com.cither.reptile.util;
 
-import com.cither.reptile.Pipeline.WebNovelPipeline;
+import com.cither.pojo.Fiction;
+import com.cither.reptile.Pipeline.InfoPipeline;
+import com.cither.reptile.parsing.InfoWebNovel;
+import com.cither.reptile.parsing.RankListWebNovel;
+import com.cither.reptile.parsing.RankWebNovel;
 import com.cither.reptile.parsing.ReadWebNovel;
-import com.cither.reptile.parsing.WebNovelInfo;
 import com.cither.service.ReadService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.ResultItems;
+import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.scheduler.BloomFilterDuplicateRemover;
-import us.codecraft.webmagic.scheduler.QueueScheduler;
+import us.codecraft.webmagic.selector.Html;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author raincither
  * @date 2021/8/8 14:32
  */
 @Component
+@Slf4j
 public class WebNovelUtil {
 
-    @Autowired
-    private  ReadService readService;
-    @Autowired
-    private  ReadWebNovel readWebNovel;
-    @Autowired
-    private  WebNovelInfo webNovelInfo;
-    @Autowired
-    private  WebNovelPipeline webNovelPipeline;
+    /**
+     * 抓取网站的相关配置，包括编码、抓取间隔、重试次数等
+     */
+    public static final Site SITE = Site.me().setRetryTimes(3).setSleepTime(1000);
 
-    private final static String RANK_URL = "https://www.qidian.com/rank/";
+    @Autowired
+    private ReadService readService;
+    @Autowired
+    private ReadWebNovel readWebNovel;
+    @Autowired
+    private InfoWebNovel infoWebNovel;
+    @Autowired
+    private InfoPipeline infoPipeline;
+    @Autowired
+    private RankListWebNovel rankWebNovel;
 
     /**
      * 获取阅读页 主体
@@ -51,26 +64,64 @@ public class WebNovelUtil {
      * 获取详情页
      * @param url 页面url read.qidian.com
      */
-    public void infoWebNovel(String url){
+    public void getInfo(String url){
         if(url == null || url.isEmpty()) {
             return;
         }
-        Spider.create(webNovelInfo)
+        Spider.create(infoWebNovel)
                 .addUrl(url)
-                .addPipeline(webNovelPipeline)
+                .addPipeline(infoPipeline)
+                .start();
+    }
+
+    /**
+     * 获取详情页
+     * @param url 页面url read.qidian.com
+     */
+    public void getInfo(List<String> url){
+        if(url == null || url.isEmpty()) {
+            return;
+        }
+        Spider.create(infoWebNovel)
+                .startUrls(url)
+                .addPipeline(infoPipeline)
                 .start();
     }
 
 
     /**
-     * 获取并保存排行榜
+     * 获取所有排行榜链接
      */
-    public void getWebNovelRank(){
-        Spider.create(webNovelInfo)
-                .addUrl(RANK_URL)
-                .addPipeline(webNovelPipeline)
-                .setScheduler(new QueueScheduler().setDuplicateRemover(new BloomFilterDuplicateRemover(10000000)))
-                .start();
+    public void getRankList(){
+        ResultItems rankResultItems = Spider.create(new RankListWebNovel()).get("https://www.qidian.com/rank/");
+        if(rankResultItems == null){
+            return;
+        }
+
+        Map<String, String> rankMap = rankResultItems.get("rankMap");
+        for (String key : rankMap.keySet()) {
+            getRank(key, rankMap.get(key));
+        }
+
+    }
+
+    public void getRank(String tag, String link){
+        ResultItems rankResultItems = Spider.create(new RankWebNovel()).get(link);
+        if(rankResultItems == null){
+            return;
+        }
+        List<String> linkList = rankResultItems.get("linkList");
+        getInfo(linkList);
+    }
+
+
+
+    /**
+     * 获取详情页
+     * @param url 页面url read.qidian.com
+     */
+    public void RankWebNovel(String url){
+
     }
 
 }
