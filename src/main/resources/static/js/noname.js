@@ -31,8 +31,8 @@ function Go(url) {
 
 function search(){
 document.writeln("<div class=\"search\">");
-document.writeln("	<form action=\"/search.php\" method=\"post\" onsubmit=\"if(q.value==\'\'){alert(\'提示：请输入小说名称或作者名字！\');return false;}\">");
-document.writeln("	<input type=\"hidden\" name=\"s\" value=\"6445266503022880974\"><input type=\"search\" class=\"text\" name=\"searchkey\" placeholder=\"小说名称、作者\" value=\"\" />");
+document.writeln("	<form action=\"/search\" method=\"post\" onsubmit=\"if(q.value==\'\'){alert(\'提示：请输入小说名称或作者名字！\');return false;}\">");
+document.writeln("	<input type=\"search\" class=\"text\" name=\"name\" placeholder=\"小说名称、作者\" value=\"\" />");
 document.writeln("	<input type=\"submit\" class=\"btn\" value=\"搜 索\">");
 document.writeln("	</form>");
 document.writeln("</div>");

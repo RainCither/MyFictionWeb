@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>templet</title>
+</head>
+<body>
+<div  th:fragment="head">
+    <div class="header">
+        <div class="wrap">
+            <div class="logo">
+                <a th:href="@{/}" title="未名亭">未名亭</a>
+            </div>
+            <script>search();</script>
+        </div>
+    </div>
+    <div class="nav">
+        <ul>
+            <li class="this"><a th:href="@{/}" title="书趣阁_笔趣阁">首页</a></li>
+            <li><a th:href="@{/type/1}">玄幻</a></li>
+            <li><a th:href="@{/type/2}">奇幻</a></li>
+            <li><a th:href="@{/type/3}">武侠</a></li>
+            <li><a th:href="@{/type/4}">仙侠</a></li>
+            <li><a th:href="@{/type/5}">都市</a></li>
+            <li><a th:href="@{/type/6}">军事</a></li>
+            <li><a th:href="@{/type/7}">历史</a></li>
+            <li><a th:href="@{/type/8}">游戏</a></li>
+            <li><a th:href="@{/type/9}">科幻</a></li>
+            <li><a th:href="@{/type/10}">悬疑</a></li>
+
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+<div class="footer"  th:fragment="footer">
+    <hr/>
+    <p>版权归作者所有，仅代表作者的观点，与未名亭立场无关。</p>
+    <p>Copyright &copy; 2015 <A href="/">未名亭</a> All Rights Reserved.
+</div>
+</body>
+</html>

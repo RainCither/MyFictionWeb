@@ -1,16 +1,12 @@
 package com.cither.reptile.parsing;
 
 import com.cither.reptile.util.WebNovelUtil;
-import com.cither.service.InfoServer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +15,7 @@ import java.util.Map;
  * @author raincither
  * @date 2021/8/26 16:26
  */
-@Component
+
 public class RankListWebNovel implements PageProcessor {
 
 
@@ -38,12 +34,12 @@ public class RankListWebNovel implements PageProcessor {
         }
 
         //获取排行榜信息
-        List<Selectable> typeList = html.xpath("//div[class='type-list']").nodes();
+        List<Selectable> typeList = html.xpath("//div[@class='type-list']/p/a").nodes();
         Map<String, String> rankMap = new HashMap<>();
         String url = "https://www.qidian.com/rank/chn";
 
         for (Selectable selectable : typeList) {
-            String link = selectable.xpath("//a/@data-chanid").get();
+            String link = url + selectable.xpath("//a/@data-chanid").get();
             String tag = selectable.xpath("//a/text()").get();
             rankMap.put(tag,link);
         }

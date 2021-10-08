@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -16,7 +14,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
-import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,11 +77,10 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .disableCachingNullValues();
         // 针对不同cacheName，设置不同的过期时间
         Map<String, RedisCacheConfiguration> initialCacheConfiguration = new HashMap<String, RedisCacheConfiguration>() {{
-            put("recommend", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1))); //1小时
+            put("recommend", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(1))); //1天
             put("recommendTwo", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10))); // 10分钟
             // ...
         }};
-
 
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(config)

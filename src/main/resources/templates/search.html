@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>书趣阁_笔趣阁</title>
+
+    <script src="http://apps.bdimg.com/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link th:href="@{/static/css/style.css}" rel="stylesheet" type="text/css"/>
+    <script th:src="@{/static/js/noname.js}"></script>
+
+</head>
+<body>
+<div th:replace="~{templet :: head}"></div>
+
+<div class="wrap">
+    <div class="bookcase">
+        <h2 th:text="'搜索“'+ ${name} +'”的结果'"></h2>
+        <div class="read_book"></div>
+        <div class="bookbox" th:each="fiction,status : ${fictions}">
+            <div class="p10"><span class="num" th:text="${status.count}"></span>
+                <div class="bookinfo">
+                    <h4 class="bookname">
+                        <a th:href="@{'/info/' + ${fiction.getBId()}}" th:text="${fiction.getBName()}"></a>
+                    </h4>
+                    <div>
+                        <span class="cat" th:text="'分类：' + ${fiction.getCat()}"></span> |
+                        <span class="author" th:text="'作者：' + ${fiction.getAuthor()}">作者</span> |
+                        <span class="author" th:text="'状态：' + ${fiction.getState()}">状态</span>
+                    </div>
+                    <div class="desc" th:text="${fiction.getDesc()}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{templet :: footer}"></div>
+</body>
+</html>

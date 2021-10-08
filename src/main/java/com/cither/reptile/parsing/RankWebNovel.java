@@ -6,7 +6,9 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author raincither
@@ -29,6 +31,15 @@ public class RankWebNovel implements PageProcessor {
 
         //获取所有排行榜链接信息
         List<String> linkList = html.xpath("//a[@data-bid]/@href").all();
+
+        //去重
+        Set<String> set = new HashSet<>(linkList);
+        linkList.clear();
+        linkList.addAll(set);
+
+        for (int i = 0; i < linkList.size(); i++) {
+            linkList.set(i,"https:" + linkList.get(i));
+        }
         page.putField("linkList", linkList);
     }
 

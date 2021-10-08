@@ -3,11 +3,11 @@ package com.cither.reptile.parsing;
 import com.cither.pojo.Chapter;
 import com.cither.pojo.Fiction;
 import com.cither.reptile.util.HttpClientUtil;
+import com.cither.reptile.util.WebNovelUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.cookie.Cookie;
-import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -23,18 +23,10 @@ import java.util.Map;
  * @author raincither
  * @date 2021/8/27 15:19
  */
-@Component
+
 public class InfoWebNovel  implements PageProcessor {
 
-    /**
-     * 部分一：抓取网站的相关配置，包括编码、抓取间隔、重试次数等
-     */
-    private final Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
-
-
-    private Cookie cookie = null;
-
-
+    private static Cookie cookie = null;
     /**
      * process the page, extract urls to fetch, extract the data and store
      *
@@ -200,6 +192,6 @@ public class InfoWebNovel  implements PageProcessor {
      */
     @Override
     public Site getSite() {
-        return null;
+        return WebNovelUtil.SITE;
     }
 }

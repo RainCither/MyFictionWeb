@@ -3,7 +3,7 @@ package com.cither.service;
 import com.cither.dao.ChapterMapper;
 import com.cither.pojo.Chapter;
 import com.cither.reptile.util.WebNovelUtil;
-import com.cither.util.RedisUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,12 +16,10 @@ import java.util.List;
  * @date 2021/8/7 14:28
  */
 @Service
+@RequiredArgsConstructor
 public class ReadService {
 
-    @Autowired
-    ChapterMapper chapterMapper;
-    @Autowired
-    private WebNovelUtil webNovelUtil;
+    private final ChapterMapper chapterMapper;
 
     /**
      * 根据书籍id查找
@@ -57,7 +55,7 @@ public class ReadService {
         //检查正文是否存在
         if(chapter.getChapter() == null){
             //获取正文
-            String content = webNovelUtil.readWebNovel(chapter.getChapterLink(), chapter.getCId());
+            String content = WebNovelUtil.getReadPage(chapter.getChapterLink(), chapter.getCId(), this);
             chapter.setChapter(content);
         }
 

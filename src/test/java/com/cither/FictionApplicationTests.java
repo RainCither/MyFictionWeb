@@ -22,11 +22,4 @@ class FictionApplicationTests {
         System.out.println(qd_g10);
     }
 
-    @Test
-    public void testRedis(){
-        RedisUtil redisUtil = new RedisUtil();
-
-        redisUtil.set("first", "jst");
-    }
-
 }

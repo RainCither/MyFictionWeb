@@ -1,7 +1,6 @@
 package com.cither.reptile.parsing;
 
 import com.cither.reptile.util.WebNovelUtil;
-import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -10,7 +9,7 @@ import us.codecraft.webmagic.selector.Html;
  * @author raincither
  * @date 2021/8/8 13:10
  */
-@Component
+
 public class ReadWebNovel implements PageProcessor {
 
 
