@@ -30,7 +30,7 @@ public class InitializeProgram implements ApplicationRunner {
             WebNovelUtil.getRankList();
         }
         for(String key : WebNovelUtil.rankList.keySet()){
-            webNovelUtil.getRank(key);
+            webNovelUtil.updateRank(key);
         }
 
         log.info("Program initialization is complete ");

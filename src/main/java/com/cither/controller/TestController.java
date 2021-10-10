@@ -2,9 +2,7 @@ package com.cither.controller;
 
 import com.cither.reptile.util.WebNovelUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ public class TestController {
 
     private final WebNovelUtil webNovelUtil;
 
-    @RequestMapping("/magic")
+    @RequestMapping("/get")
     public String magic(){
         if(WebNovelUtil.rankList.isEmpty()){
             WebNovelUtil.getRankList();
@@ -29,18 +27,23 @@ public class TestController {
         }
         return "success";
     }
-    @RequestMapping("/magic1")
+    @RequestMapping("/update")
     public String magic1(){
-        //webNovelUtil.updateRank();
+        if(WebNovelUtil.rankList.isEmpty()){
+            WebNovelUtil.getRankList();
+        }
+        for(String key : WebNovelUtil.rankList.keySet()){
+            List<String> rank = webNovelUtil.updateRank(key);
+        }
         return "success";
     }
-    @RequestMapping("/tag/{tag}")
+    @GetMapping("/tag/{tag}")
     public String tag(@PathVariable String tag){
         webNovelUtil.getRank(tag);
         return "success";
     }
 
-    @RequestMapping("/pull/{uid}")
+    @GetMapping("/pull/{uid}")
     public String pull(@PathVariable int uid){
         webNovelUtil.getInfo("https://book.qidian.com/info/" + uid);
         return "success";

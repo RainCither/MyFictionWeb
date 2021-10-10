@@ -1,0 +1,45 @@
+version: '2'
+services:
+  mysql:                                # mysql容器
+    container_name: mysql
+    build:
+      context: ./
+      dockerfile: ./mysql/Dockerfile
+    environment:
+      MYSQL_DATABASE: fiction             # 创建名为fiction的库
+      MYSQL_ROOT_PASSWORD: admin          # 设置root用户的密码
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"                     #将宿主机的33061端口映射到mysql容器内的3306端口
+    volumes:                              #将宿主机的对应目录挂载到容器内部相应目录，实现数据持久化
+      - "./mysql/db:/var/lib/mysql"
+      - "./mysql/conf/my.cnf:/etc/my.cnf"
+      - "./mysql/init:/docker-entrypoint-initdb.d/" 
+    restart: always           # 自动重启
+  
+  redis:
+    container_name: redis
+    build:
+      context: ./
+      dockerfile: ./redis/Dockerfile
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./redis/data:/data"
+      - "./redis/redis/redis.conf:/etc/redis/redis.conf"
+    restart: always
+    command: redis-server /etc/redis/redis.conf      #指定容器启动时执行的命令
+
+  server:
+    depends_on:
+      - redis
+      - mysql
+    container_name: server
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./server/Dockerfile
+    ports:
+      - "80:8080"
+    volumes:
+      - "./server/application.yaml:/usr/local/application.yaml"

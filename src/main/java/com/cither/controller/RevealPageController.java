@@ -28,7 +28,9 @@ public class RevealPageController {
     @GetMapping("/")
     public String fictionMain(Model model) {
 
-        List<Fiction> recommend = revealPageServer.getRecommend(BookGenreEnum.ALL).subList(0,9);
+        List<Fiction> recommend = revealPageServer.getRecommend(BookGenreEnum.ALL);
+
+        recommend = recommend.subList(0,Math.min(9, recommend.size()));
 
         List<Fiction> latestFiction = infoService.getLatestFiction(50);
 
