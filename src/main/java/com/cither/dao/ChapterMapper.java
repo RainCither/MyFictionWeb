@@ -1,7 +1,6 @@
 package com.cither.dao;
 
 import com.cither.pojo.Chapter;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;

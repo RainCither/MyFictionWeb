@@ -22,9 +22,9 @@ public class TestController {
         if(WebNovelUtil.rankList.isEmpty()){
             WebNovelUtil.getRankList();
         }
-        for(String key : WebNovelUtil.rankList.keySet()){
-            List<String> rank = webNovelUtil.getRank(key);
-        }
+        for(String key : WebNovelUtil.rankList.keySet())
+            webNovelUtil.getRank(key);
+
         return "success";
     }
     @RequestMapping("/update")
@@ -32,9 +32,8 @@ public class TestController {
         if(WebNovelUtil.rankList.isEmpty()){
             WebNovelUtil.getRankList();
         }
-        for(String key : WebNovelUtil.rankList.keySet()){
-            List<String> rank = webNovelUtil.updateRank(key);
-        }
+        for(String key : WebNovelUtil.rankList.keySet())
+            webNovelUtil.updateRank(key);
         return "success";
     }
     @GetMapping("/tag/{tag}")

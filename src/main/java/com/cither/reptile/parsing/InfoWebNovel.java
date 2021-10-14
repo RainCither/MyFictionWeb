@@ -15,6 +15,7 @@ import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,7 +143,7 @@ public class InfoWebNovel  implements PageProcessor {
             updateCookie(bId);
         }
         if(catalogInfo == null){
-            return null;
+            return Collections.emptyList();
         }
         int which = 0;
         for (JsonNode volumes : catalogInfo) {
@@ -171,7 +172,7 @@ public class InfoWebNovel  implements PageProcessor {
     /**
      * 获取cookie
      */
-    private void updateCookie(String bid){
+    private static void updateCookie(String bid){
         HttpClientUtil.get("https://book.qidian.com/info/" +bid);
         List<Cookie> cookies = HttpClientUtil.httpCookieStore.getCookies();
         for (Cookie c : cookies) {

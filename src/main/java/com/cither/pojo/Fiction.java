@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class Fiction implements Serializable {
 
-    private final static long serialVersionUID = 7L;
+    private static final long serialVersionUID = 7L;
 
     /**
      * id

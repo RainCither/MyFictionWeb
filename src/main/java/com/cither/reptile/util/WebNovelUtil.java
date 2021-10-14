@@ -1,6 +1,6 @@
 package com.cither.reptile.util;
 
-import com.cither.reptile.Pipeline.InfoPipeline;
+import com.cither.reptile.pipeline.InfoPipeline;
 import com.cither.reptile.parsing.InfoWebNovel;
 import com.cither.reptile.parsing.RankListWebNovel;
 import com.cither.reptile.parsing.RankWebNovel;
@@ -9,16 +9,13 @@ import com.cither.service.InfoService;
 import com.cither.service.ReadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 
-import javax.naming.LinkLoopException;
 import java.util.*;
 
 /**
@@ -39,10 +36,10 @@ public class WebNovelUtil {
     private final InfoService infoService;
     private final InfoPipeline infoPipeline;
 
-    private final static ReadWebNovel READ_WEB_NOVEL = new ReadWebNovel();
-    private final static InfoWebNovel INFO_WEB_NOVEL = new InfoWebNovel();
-    private final static RankWebNovel RANK_WEB_NOVEL = new RankWebNovel();
-    private final static RankListWebNovel RANK_LIST_WEB_NOVEL = new RankListWebNovel();
+    private static final ReadWebNovel READ_WEB_NOVEL = new ReadWebNovel();
+    private static final InfoWebNovel INFO_WEB_NOVEL = new InfoWebNovel();
+    private static final RankWebNovel RANK_WEB_NOVEL = new RankWebNovel();
+    private static final RankListWebNovel RANK_LIST_WEB_NOVEL = new RankListWebNovel();
 
     /**
      * 获取阅读页 主体

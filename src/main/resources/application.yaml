@@ -3,9 +3,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/fiction?&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/fiction?&serverTimezone=UTC
 #    url: jdbc:mysql://1.13.0.249:3306/fiction?&serverTimezone=UTC
-    url: jdbc:mysql://mysql:3306/fiction?&serverTimezone=UTC
+#    url: jdbc:mysql://mysql:3306/fiction?&serverTimezone=UTC
     username: root
     password: admin
     druid:
@@ -36,8 +36,8 @@ spring:
         exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
 
   redis:
-    host: redis
-#    host:127.0.0.1
+#    host: redis
+    host: 127.0.0.1
 #    host: 1.13.0.249
     port: 6379
     database: 0

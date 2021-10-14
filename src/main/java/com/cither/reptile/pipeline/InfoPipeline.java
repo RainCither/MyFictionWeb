@@ -1,4 +1,4 @@
-package com.cither.reptile.Pipeline;
+package com.cither.reptile.pipeline;
 
 import com.cither.pojo.Chapter;
 import com.cither.pojo.Fiction;
@@ -6,7 +6,6 @@ import com.cither.service.InfoService;
 import com.cither.service.ReadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;

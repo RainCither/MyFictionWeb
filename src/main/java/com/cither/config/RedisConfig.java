@@ -50,7 +50,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
     /**
     // 自定义key生成器
-    @Bean
+    Bean
     public KeyGenerator keyGenerator(){
         return (o, method, params) ->{
             StringBuilder sb = new StringBuilder();
@@ -76,11 +76,11 @@ public class RedisConfig extends CachingConfigurerSupport {
                 // 不缓存null值
                 .disableCachingNullValues();
         // 针对不同cacheName，设置不同的过期时间
-        Map<String, RedisCacheConfiguration> initialCacheConfiguration = new HashMap<String, RedisCacheConfiguration>() {{
-            put("recommend", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(1))); //1天
-            put("recommendTwo", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10))); // 10分钟
-            // ...
-        }};
+        Map<String, RedisCacheConfiguration> initialCacheConfiguration = new HashMap<>();
+        initialCacheConfiguration.put("recommend", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(1))); //1天
+        initialCacheConfiguration.put("recommendTwo", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10))); // 10分钟
+        // ...
+
 
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(config)
